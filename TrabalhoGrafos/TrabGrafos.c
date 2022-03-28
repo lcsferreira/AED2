@@ -25,7 +25,7 @@ int main() {
       imprimeMatriz(matrizAdj, qtdVertices);
       break;
     case 3:
-      printf("Ate mais :)\n");
+      printf("\nSaindo...\n\tAte mais :)\n");
       exit(0);
       break;
     default:
@@ -72,6 +72,9 @@ void adicionarVertice(int matrizAdj[20][20], int qtdVertices) {
 }
 
 void imprimeMatriz(int matrizAdj[20][20], int qtdVertices) {
+  if (qtdVertices == 0) {
+    printf("\nNenhum vertice foi adicionado ao grafo!");
+  }
   printf("   ");
   for (int i = 0; i < qtdVertices; i++) {
     printf(" V%d", i + 1);
