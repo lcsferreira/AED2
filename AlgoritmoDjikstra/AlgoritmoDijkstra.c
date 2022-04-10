@@ -19,7 +19,7 @@ int main() {
       } while (qtdVertices < 2 || qtdVertices > MAX);
       for (int i = 0; i < qtdVertices; i++) {
         for (int j = 0; j < qtdVertices; j++) {
-          if (j <= i) {
+          if (j == i) {
             matrizAdj[i][j] = 0;
           } else {
             do {
