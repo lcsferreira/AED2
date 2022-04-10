@@ -8,7 +8,7 @@ void algoritmoDjikstra(int verticeDestino, int verticeOrigem, int matrizAdj[MAX]
 int menu();
 
 int main() {
-  int qtdVertices, matrizAdj[MAX][MAX], verticeOrigem, verticeDestino;
+  int qtdVertices = 0, matrizAdj[MAX][MAX], verticeOrigem, verticeDestino;
 
   do {
     switch (menu()) {
@@ -19,7 +19,7 @@ int main() {
       } while (qtdVertices < 2 || qtdVertices > MAX);
       for (int i = 0; i < qtdVertices; i++) {
         for (int j = 0; j < qtdVertices; j++) {
-          if (j < i) {
+          if (j <= i) {
             matrizAdj[i][j] = 0;
           } else {
             do {
@@ -31,24 +31,28 @@ int main() {
       }
       break;
     case 2:
-      do {
-        printf("\nInsira o vertice de origem: ");
-        scanf("%d", &verticeOrigem);
-      } while (verticeOrigem < 1 || verticeOrigem > MAX);
-      do {
-        printf("\nInsira o vertice de destino: ");
-        scanf("%d", &verticeDestino);
-      } while ((verticeDestino < 1 || verticeDestino > MAX) && verticeDestino == verticeOrigem);
-      verticeDestino--;
-      verticeOrigem--;
-      algoritmoDjikstra(verticeDestino, verticeOrigem, matrizAdj, qtdVertices);
+      if (qtdVertices == 0) {
+        printf("\nNao ha vertices do grafo!");
+      } else {
+        do {
+          printf("\nInsira o vertice de origem: ");
+          scanf("%d", &verticeOrigem);
+        } while (verticeOrigem < 1 || verticeOrigem > MAX);
+        do {
+          printf("\nInsira o vertice de destino: ");
+          scanf("%d", &verticeDestino);
+        } while ((verticeDestino < 1 || verticeDestino > MAX) && verticeDestino == verticeOrigem);
+        verticeDestino--;
+        verticeOrigem--;
+        algoritmoDjikstra(verticeDestino, verticeOrigem, matrizAdj, qtdVertices);
+      }
       break;
     case 3:
       printf("\nSaindo...\n\tAte mais :)\n");
       exit(0);
       break;
     default:
-      printf("Opção inválida!\n");
+      printf("Opcao invalida!\n");
       break;
     }
 
@@ -56,13 +60,12 @@ int main() {
 }
 
 void algoritmoDjikstra(int verticeDestino, int verticeOrigem, int matrizAdj[MAX][MAX], int qtdVertices) {
-  int antecessores[qtdVertices], distancias[qtdVertices], visitados[qtdVertices];
+  int distancias[qtdVertices], visitados[qtdVertices];
   int contador = 0;
   int indexMenorDistancia = verticeOrigem, menorDistancia;
 
   for (int i = 0; i < qtdVertices; i++) {
     distancias[i] = INFINITO;
-    antecessores[i] = -1;
     visitados[i] = 0;
   }
 
@@ -86,7 +89,6 @@ void algoritmoDjikstra(int verticeDestino, int verticeOrigem, int matrizAdj[MAX]
         if (visitados[i] == 0) {
           if (menorDistancia + matrizAdj[indexMenorDistancia][i] < distancias[i]) {
             distancias[i] = menorDistancia + matrizAdj[indexMenorDistancia][i];
-            antecessores[i] = indexMenorDistancia;
           }
         }
       }
@@ -95,7 +97,7 @@ void algoritmoDjikstra(int verticeDestino, int verticeOrigem, int matrizAdj[MAX]
   }
 
   if (distancias[verticeDestino] == INFINITO) {
-    printf("Não tem caminhos válidos.\n");
+    printf("Nao tem caminhos validos\n");
   } else {
     printf("A menor distancia entre o vertice %d e o vertice %d: %d\n", verticeOrigem + 1, verticeDestino + 1, distancias[verticeDestino]);
   }
@@ -104,7 +106,7 @@ void algoritmoDjikstra(int verticeDestino, int verticeOrigem, int matrizAdj[MAX]
 int menu() {
   int escolha;
   printf("\n--- MENU ---- \n");
-  printf("\t 1 - Inserir matriz de adjacencia\n");
+  printf("\t 1 - Inserir o peso das arestas do grafo\n");
   printf("\t 2 - Buscar menor caminho entre dois vertices\n");
   printf("\t 3 - Sair\n");
 
